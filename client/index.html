@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="js">
 <head>
 	<meta charset="UTF-8">
 	<title>chat</title>
+	<script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-	
+	<h1>SpringCorse2017</h1>
+	<h2>Chat Room</h2>
+	<form>
+	<input type="text" name="" id="messageForm">
+
+	<button type="button" name="send" id="sendBtn" >送信</button>
+	</form>
+	<div id="message">
+		<p>
+		</p>
+	</div>
+
+	<div id="footer">Copyright &copy yusuke.</div>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	var socket = io.connect('localhost:3000');
+	//メッセージ受け取る
+	//socket.emit('message', {value : 'agokui'});
+	socket.on('stoc_mes', function(data){
+		$("#message").append("<div>"+ data.value +"</div><hr>");
+	});
+
+	$("#sendBtn").click( function () {
+		var message = $("#messageForm").val();
+		console.log(message);
+		socket.emit('message', {value : message});
+	});
+	</script>
+
 </body>
 </html>
